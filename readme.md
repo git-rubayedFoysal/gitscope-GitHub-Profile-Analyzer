@@ -4,11 +4,6 @@
 
 **Live Demo → [gitscope-analyzer.vercel.app](https://gitscope-analyzer.vercel.app/)**
 
----
-
-## Preview
-
-![gitscope dark mode preview](./screenshots/preview-dark.png)
 
 ---
 
@@ -99,7 +94,6 @@ No API key is required. No server-side code. No environment variables.
 
 ## Author
 
-**Rubayed Ahmed Foysal**
 [![GitHub](https://img.shields.io/badge/GitHub-git--rubayedFoysal-181717?logo=github)](https://github.com/git-rubayedFoysal)
 
 ---
