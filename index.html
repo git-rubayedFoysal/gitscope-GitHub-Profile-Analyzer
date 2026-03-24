@@ -3,7 +3,24 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>gitscope</title>
+    <title>gitscope — GitHub Profile Analyzer</title>
+    <meta
+      name="description"
+      content="Analyze any GitHub profile and repositories instantly. View stats, languages, contribution graphs, and more."
+    />
+    <meta property="og:title" content="gitscope — GitHub Profile Analyzer" />
+    <meta
+      property="og:description"
+      content="Analyze any GitHub profile and repositories instantly. View stats, languages, contribution graphs, and more."
+    />
+    <meta property="og:url" content="https://gitscope-analyzer.vercel.app/" />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary" />
+    <meta name="twitter:title" content="gitscope — GitHub Profile Analyzer" />
+    <meta
+      name="twitter:description"
+      content="Analyze any GitHub profile and repositories instantly."
+    />
     <link rel="shortcut icon" href="./icon/favicon.svg" type="image/x-icon" />
     <link rel="stylesheet" href="./style.css" />
     <script
@@ -104,22 +121,22 @@
                 </div>
               </div>
 
-              <div class="profile-detaits">
-                <h2 id="p-name"></h2>
-                <p id="p-username"></p>
+              <div class="profile-details">
+                <h2 id="p-name" class="skeleton-target"></h2>
+                <p id="p-username" class="skeleton-target"></p>
                 <div class="location">
                   <div class="location-dot"></div>
                   <p id="p-location"></p>
                 </div>
-                <p id="p-bio"></p>
+                <p id="p-bio" class="skeleton-target"></p>
 
                 <div class="inner">
                   <div class="card-inner">
-                    <p id="p-follower"></p>
+                    <p id="p-follower" class="skeleton-target"></p>
                     <p class="p-para">Followers</p>
                   </div>
                   <div class="card-inner">
-                    <p id="p-following"></p>
+                    <p id="p-following" class="skeleton-target"></p>
                     <p class="p-para">Following</p>
                   </div>
                   <div class="card-inner">
@@ -127,7 +144,7 @@
                     <p class="p-para">Repos</p>
                   </div>
                   <div class="card-inner">
-                    <p id="p-joined"></p>
+                    <p id="p-joined" class="skeleton-target"></p>
                     <p class="p-para">Joined</p>
                   </div>
                 </div>
@@ -143,22 +160,22 @@
           <div class="outer">
             <div class="card-outer">
               <p class="p-para">⭐</p>
-              <p id="p-star"></p>
+              <p id="p-star" class="skeleton-target"></p>
               <p class="p-para para-top">Total Stars</p>
             </div>
             <div class="card-outer">
               <p class="p-para">🍴</p>
-              <p id="p-fork"></p>
+              <p id="p-fork" class="skeleton-target"></p>
               <p class="p-para para-top">total forks</p>
             </div>
             <div class="card-outer">
               <p class="p-para">🔥</p>
-              <p id="p-top-repo"></p>
+              <p id="p-top-repo" class="skeleton-target"></p>
               <p class="p-para para-top">Top Repos</p>
             </div>
             <div class="card-outer">
               <p class="p-para">🕒</p>
-              <p id="p-last-active"></p>
+              <p id="p-last-active" class="skeleton-target"></p>
               <p class="p-para para-top">Last Active</p>
             </div>
           </div>
@@ -244,8 +261,8 @@
         </div>
       </div>
     </footer>
-
     <script src="./script.js" defer></script>
+
     <!-- Vercel Web Analytics -->
     <script>
       window.va =
@@ -255,5 +272,15 @@
         };
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
+
+    <!-- Vercel Speed Insights -->
+    <script>
+      window.si =
+        window.si ||
+        function () {
+          (window.siq = window.siq || []).push(arguments);
+        };
+    </script>
+    <script defer src="/_vercel/speed-insights/script.js"></script>
   </body>
 </html>

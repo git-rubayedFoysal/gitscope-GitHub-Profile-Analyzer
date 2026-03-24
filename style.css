@@ -406,7 +406,7 @@ button.loading::after {
 }
 
 /* Profile details */
-.profile-detaits {
+.profile-details {
   flex: 1;
   min-width: 0;
 }
@@ -1031,4 +1031,46 @@ p.p-para.para-top {
   .foot-copy {
     display: none;
   }
+}
+
+/* ============================================================
+   SKELETON LOADER
+   ============================================================ */
+@keyframes shimmer {
+  0% {
+    background-position: -600px 0;
+  }
+  100% {
+    background-position: 600px 0;
+  }
+}
+
+.skeleton-mode .skeleton-target {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 25%,
+    var(--border-default) 50%,
+    var(--bg-surface) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: var(--radius-sm);
+  color: transparent !important;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* individual skeleton sizes */
+.skeleton-mode #p-img {
+  opacity: 0;
+}
+.skeleton-mode .avatar-ring {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 25%,
+    var(--border-default) 50%,
+    var(--bg-surface) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite linear;
 }
