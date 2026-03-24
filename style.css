@@ -910,34 +910,125 @@ p.p-para.para-top {
   }
 }
 
+/* ============================================================
+   FOOTER — redesigned
+   ============================================================ */
 #footer {
   margin-top: auto;
-  margin-bottom: 30px;
   width: 100%;
+  border-top: 1px solid var(--border-subtle);
 }
 
 .footWrapper {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  gap: 10px;
-  /* background-color: var(--bg-sunken); */
-  padding: 10px;
-  color: var(--text-secondary);
-  cursor: pointer;
-  /* border-radius: var(--radius-md); */
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 20px 0;
 }
 
-.footWrapper > a {
+/* Left: brand slug */
+.foot-brand {
   display: flex;
-  justify-content: flex-start;
   align-items: center;
-  gap: 5px;
-  color: var(--text-link);
-  font-size: 0.85rem;
-  transition: all 0.3s ease;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
 }
 
-.footWrapper > a:hover {
-  text-decoration: underline;
+.foot-brand-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  flex-shrink: 0;
+  box-shadow: 0 0 6px var(--accent);
+  animation: footPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes footPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.foot-brand-name {
+  color: var(--text-secondary);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Center: copyright line */
+.foot-copy {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-ghost);
+  letter-spacing: 0.04em;
+  text-align: center;
+  flex: 1;
+}
+
+/* Right: GitHub link */
+.foot-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease,
+    background-color 0.3s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.foot-link i {
+  font-size: 0.9rem;
+}
+
+.foot-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background-color: var(--accent-bg);
+}
+
+@media (max-width: 640px) {
+  .footWrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 0;
+    text-align: center;
+  }
+
+  .foot-copy {
+    order: 3;
+    font-size: 0.65rem;
+  }
+
+  .foot-brand {
+    order: 1;
+  }
+  .foot-link {
+    order: 2;
+    padding: 7px 14px;
+  }
+}
+
+@media (max-width: 400px) {
+  .foot-copy {
+    display: none;
+  }
 }
