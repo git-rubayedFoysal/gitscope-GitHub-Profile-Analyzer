@@ -285,6 +285,7 @@ form.addEventListener("submit", async (e) => {
     repoData.sort((a, b) => b.stargazers_count - a.stargazers_count);
 
     renderProfile(userData, mostRecentPush);
+    renderInsights(userData, repoData);
     renderRepoInfo(repoData);
     renderAllRepo(repoData);
   } catch (error) {
@@ -320,4 +321,238 @@ function toggleTheme() {
     localStorage.setItem("theme", "light");
   }
   if (currentData) updateChart(currentData);
+}
+
+// ── Insights ──────────────────────────────────────────────────
+function generateInsights(user, repos) {
+  const insights = [];
+
+  // 1. Language focus
+  const langCount = {};
+  repos.forEach((r) => {
+    if (r.language) langCount[r.language] = (langCount[r.language] || 0) + 1;
+  });
+  const topLangs = Object.entries(langCount).sort((a, b) => b[1] - a[1]);
+  if (topLangs.length > 0) {
+    const top = topLangs[0][0];
+    const focusMap = {
+      JavaScript: "Frontend-focused developer",
+      TypeScript: "Frontend-focused developer",
+      HTML: "Frontend-focused developer",
+      CSS: "Frontend-focused developer",
+      Python: "Python / data-science oriented developer",
+      Java: "Backend / systems developer",
+      "C++": "Systems / competitive programmer",
+      C: "Systems / low-level developer",
+      Go: "Backend / infrastructure developer",
+      Rust: "Systems / performance-focused developer",
+      PHP: "Backend / web developer",
+      Ruby: "Backend / web developer",
+    };
+    insights.push({
+      icon: "💻",
+      text: focusMap[top] || `${top}-focused developer`,
+    });
+  }
+
+  // 2. Repo popularity
+  const totalStars = repos.reduce((s, r) => s + (r.stargazers_count || 0), 0);
+  const avgStars = repos.length ? totalStars / repos.length : 0;
+  if (totalStars >= 100 || avgStars >= 5) {
+    insights.push({ icon: "⭐", text: "Highly popular repositories" });
+  } else if (totalStars >= 20) {
+    insights.push({ icon: "⭐", text: "Growing repository popularity" });
+  }
+
+  // 3. Activity
+  const recentRepos = repos.filter((r) => {
+    const days = (Date.now() - new Date(r.pushed_at)) / 86400000;
+    return days <= 90;
+  });
+  if (recentRepos.length >= 5) {
+    insights.push({ icon: "🔥", text: "Very active contributor" });
+  } else if (recentRepos.length >= 2) {
+    insights.push({ icon: "🔥", text: "Regularly active contributor" });
+  } else {
+    insights.push({ icon: "💤", text: "Occasionally active" });
+  }
+
+  // 4. Portfolio size
+  if (user.public_repos >= 30) {
+    insights.push({ icon: "📁", text: "Extensive project portfolio" });
+  } else if (user.public_repos >= 10) {
+    insights.push({ icon: "📁", text: "Growing project portfolio" });
+  } else {
+    insights.push({ icon: "🌱", text: "Early-stage portfolio" });
+  }
+
+  // 5. Community
+  if (user.followers >= 100) {
+    insights.push({ icon: "👥", text: "Well-known in the community" });
+  } else if (user.followers >= 20) {
+    insights.push({ icon: "👥", text: "Emerging community presence" });
+  }
+
+  // 6. Open source contributor
+  const forkedFrom = repos.filter((r) => r.fork).length;
+  if (forkedFrom >= 5) {
+    insights.push({ icon: "🔀", text: "Active open-source contributor" });
+  }
+
+  // 7. Language diversity
+  if (topLangs.length >= 5) {
+    insights.push({
+      icon: "🌐",
+      text: "Polyglot — works across many languages",
+    });
+  }
+
+  return insights;
+}
+
+function renderInsights(user, repos) {
+  const section = document.querySelector("#insightSection");
+  const list = document.querySelector("#insightList");
+
+  const insights = generateInsights(user, repos);
+  list.replaceChildren();
+
+  if (insights.length === 0) {
+    section.style.display = "none";
+    return;
+  }
+
+  section.style.display = "block";
+  const fragment = document.createDocumentFragment();
+
+  insights.forEach((item, i) => {
+    const li = document.createElement("li");
+    li.className = "insight-item";
+    li.style.animationDelay = `${i * 80}ms`;
+    li.innerHTML = `<span class="insight-icon">${item.icon}</span><span class="insight-text">${item.text}</span>`;
+    fragment.append(li);
+  });
+
+  list.append(fragment);
+
+  calculateScore(user, repos);
+}
+
+function calculateScore(userData, repoData) {
+  let score = 0;
+  // check bio
+  if (userData.bio) {
+    score += 10;
+  }
+  //check avatar
+  if (userData.avatar_url) {
+    score += 10;
+  }
+
+  //check name
+  if (userData.name) {
+    score += 5;
+  }
+
+  // repo count
+  let repo_count = userData.public_repos;
+  if (repo_count > 50) {
+    score += 20;
+  } else if (repo_count > 20) {
+    score += 15;
+  } else if (repo_count > 5) {
+    score += 10;
+  } else {
+    score += 5;
+  }
+
+  // star_count
+  let star_count = 0;
+  repoData.forEach((r) => {
+    star_count += r.stargazers_count || 0;
+  });
+
+  if (star_count > 1000) {
+    score += 20;
+  } else if (star_count > 100) {
+    score += 15;
+  } else if (star_count > 10) {
+    score += 10;
+  } else {
+    score += 5;
+  }
+  // activity score
+  const mostRecentPush =
+    repoData.length > 0
+      ? repoData.sort(
+          (a, b) => new Date(b.pushed_at) - new Date(a.pushed_at),
+        )[0].pushed_at
+      : null;
+
+  const last = mostRecentPush
+    ? new Date(mostRecentPush)
+    : new Date(data.updated_at);
+
+  const days_ago = (Date.now() - new Date(last)) / 86400000;
+
+  if (days_ago <= 7) {
+    score += 20;
+  } else if (days_ago <= 30) {
+    score += 10;
+  } else {
+    score += 5;
+  }
+
+  // check location
+  if (userData.location) {
+    score += 5;
+  }
+  // check blog
+  if (userData.blog) {
+    score += 5;
+  }
+
+  if (score > 100) {
+    score = 100;
+  }
+
+  const scoreComment = document.querySelector("#score-catagory");
+
+  if (score >= 80) {
+    scoreComment.textContent = `Excellent`;
+    scoreComment.style.color = "#00f5c4";
+  } else if (score >= 60) {
+    scoreComment.textContent = `Good`;
+    scoreComment.style.color = "#f0c040";
+  } else if (score >= 40) {
+    scoreComment.textContent = `Average`;
+    scoreComment.style.color = "#92600a";
+  } else {
+    scoreComment.textContent = `Needs Improvements`;
+    scoreComment.style.color = "crimson";
+  }
+
+  const progressCircle = document.querySelector(".circular-progress");
+  progressCircle.setAttribute("data-progress", score);
+  renderCirculerProgress();
+}
+
+function renderCirculerProgress() {
+  const progressCircle = document.querySelector(".circular-progress");
+  const progressValue = progressCircle.querySelector(".progress-value");
+  const target = parseInt(progressCircle.getAttribute("data-progress"));
+
+  let current = 0;
+  const speed = 20; // milliseconds between updates
+
+  function animateProgress() {
+    if (current <= target) {
+      progressCircle.style.background = `conic-gradient(#02987a 0% ${current}%, #00f5c430 ${current}% 100%)`;
+      progressValue.textContent = `${current}%`;
+      current++;
+      setTimeout(animateProgress, speed);
+    }
+  }
+
+  animateProgress();
 }

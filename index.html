@@ -182,6 +182,33 @@
         </div>
       </section>
 
+      <section id="insightSection" style="display: none">
+        <div class="container">
+          <div class="analyze">
+            <div class="insight-card">
+              <div class="insight-header">
+                <span class="insight-brain">🧠</span>
+                <h3>Insights</h3>
+              </div>
+              <ul class="insight-list" id="insightList"></ul>
+            </div>
+            <div class="score-card">
+              <div class="score-header">
+                <h3>Profile Score</h3>
+              </div>
+              <div class="score-wrapper">
+                <div class="circle">
+                  <div class="circular-progress" data-progress="85">
+                    <span class="progress-value">25%</span>
+                  </div>
+                </div>
+                <div id="score-catagory">Excellent</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="contributionChart">
         <div class="container">
           <img src="" id="contribution" />
@@ -272,15 +299,5 @@
         };
     </script>
     <script defer src="/_vercel/insights/script.js"></script>
-
-    <!-- Vercel Speed Insights -->
-    <script>
-      window.si =
-        window.si ||
-        function () {
-          (window.siq = window.siq || []).push(arguments);
-        };
-    </script>
-    <script defer src="/_vercel/speed-insights/script.js"></script>
   </body>
 </html>

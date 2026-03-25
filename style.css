@@ -738,8 +738,310 @@ p.p-para.para-top {
 }
 
 /* ============================================================
+   FOOTER — redesigned
+   ============================================================ */
+#footer {
+  margin-top: auto;
+  width: 100%;
+  border-top: 1px solid var(--border-subtle);
+}
+
+.footWrapper {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  padding: 20px 0;
+}
+
+/* Left: brand slug */
+.foot-brand {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-family: var(--font-mono);
+  font-size: 0.78rem;
+  color: var(--text-muted);
+  white-space: nowrap;
+}
+
+.foot-brand-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background-color: var(--accent);
+  flex-shrink: 0;
+  box-shadow: 0 0 6px var(--accent);
+  animation: footPulse 2.4s ease-in-out infinite;
+}
+
+@keyframes footPulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.3;
+  }
+}
+
+.foot-brand-name {
+  color: var(--text-secondary);
+  font-weight: 700;
+  letter-spacing: 0.02em;
+}
+
+/* Center: copyright line */
+.foot-copy {
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  color: var(--text-ghost);
+  letter-spacing: 0.04em;
+  text-align: center;
+  flex: 1;
+}
+
+/* Right: GitHub link */
+.foot-link {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-sm);
+  padding: 6px 12px;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease,
+    background-color 0.3s ease;
+  white-space: nowrap;
+  text-decoration: none;
+}
+
+.foot-link i {
+  font-size: 0.9rem;
+}
+
+.foot-link:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  background-color: var(--accent-bg);
+}
+
+/* ============================================================
+   SKELETON LOADER
+   ============================================================ */
+@keyframes shimmer {
+  0% {
+    background-position: -600px 0;
+  }
+  100% {
+    background-position: 600px 0;
+  }
+}
+
+.skeleton-mode .skeleton-target {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 25%,
+    var(--border-default) 50%,
+    var(--bg-surface) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite linear;
+  border-radius: var(--radius-sm);
+  color: transparent !important;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* individual skeleton sizes */
+.skeleton-mode #p-img {
+  opacity: 0;
+}
+.skeleton-mode .avatar-ring {
+  background: linear-gradient(
+    90deg,
+    var(--bg-surface) 25%,
+    var(--border-default) 50%,
+    var(--bg-surface) 75%
+  );
+  background-size: 600px 100%;
+  animation: shimmer 1.4s infinite linear;
+}
+
+/* ============================================================
+   INSIGHTS SECTION
+   ============================================================ */
+#insightSection {
+  margin: 30px 0;
+}
+
+.analyze {
+  display: grid;
+  grid-template-columns: repeat(12, 1fr);
+  justify-content: flex-start;
+  align-items: stretch;
+  gap: 20px;
+}
+
+.insight-card {
+  grid-column: 1 / span 7;
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  transition: border-color 0.3s ease;
+}
+
+.insight-card:hover {
+  border-color: var(--border-hover);
+}
+
+.insight-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 18px;
+}
+
+.score-header {
+  margin-bottom: 20px;
+}
+
+.insight-brain {
+  font-size: 1.3rem;
+  line-height: 1;
+}
+
+.insight-header h3,
+.score-header h3 {
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.insight-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  padding: 0;
+  margin: 0;
+}
+
+@keyframes insightPop {
+  from {
+    opacity: 0;
+    transform: translateY(8px) scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.insight-item {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--bg-surface);
+  border: 1px solid var(--border-default);
+  border-radius: 999px;
+  padding: 7px 14px;
+  font-size: 0.82rem;
+  font-family: var(--font-mono);
+  color: var(--text-secondary);
+  opacity: 0;
+  animation: insightPop 0.35s ease forwards;
+  transition:
+    border-color 0.3s ease,
+    color 0.3s ease;
+  cursor: default;
+}
+
+.insight-item:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.insight-icon {
+  font-size: 0.95rem;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.insight-text {
+  white-space: "";
+}
+
+.score-card {
+  grid-column: 8 / -1;
+  background: var(--bg-sunken);
+  border: 1px solid var(--border-default);
+  border-radius: var(--radius-lg);
+  padding: 22px 24px;
+  transition: all 0.3s ease;
+  text-align: left;
+}
+
+.score-wrapper {
+  display: flex;
+  justify-content: flex-start;
+  flex-direction: column;
+  align-items: center;
+}
+
+.circle {
+  padding: 20px;
+}
+
+.circular-progress {
+  width: 160px;
+  height: 160px;
+  border-radius: 50%;
+  background: conic-gradient(
+    #00875a 0% 25%,
+    /* Filled part */ #001f18 25% 100% /* Remaining circle */
+  );
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  font-size: 20px;
+  color: var(--accent);
+  position: relative;
+  font-weight: 700;
+}
+
+.circular-progress::before {
+  content: "";
+  width: 120px; /* Inner circle to create a ring */
+  height: 120px;
+  background: var(--bg-surface);
+  border-radius: 50%;
+  position: absolute;
+}
+.circular-progress .progress-value {
+  position: relative;
+  z-index: 1;
+}
+
+#score-catagory {
+  font-family: var(--font-mono);
+  font-weight: 700;
+  font-size: 1.2rem;
+}
+
+/* ============================================================
    RESPONSIVE — Tablet  (≤ 900px)
    ============================================================ */
+
 @media (max-width: 900px) {
   /* Profile: stack avatar + details vertically */
   .profile-menu {
@@ -869,6 +1171,45 @@ p.p-para.para-top {
   #p-last-active {
     font-size: 1.1rem;
   }
+
+  .footWrapper {
+    flex-direction: column;
+    align-items: center;
+    gap: 14px;
+    padding: 18px 0;
+    text-align: center;
+  }
+
+  .foot-copy {
+    order: 3;
+    font-size: 0.65rem;
+  }
+
+  .foot-brand {
+    order: 1;
+  }
+  .foot-link {
+    order: 2;
+    padding: 7px 14px;
+  }
+
+  .insight-card {
+    padding: 16px;
+    grid-column: 1/-1;
+  }
+
+  .score-card {
+    grid-column: 1/-1;
+  }
+
+  .insight-item {
+    font-size: 0.7rem;
+    padding: 6px 12px;
+  }
+
+  .insight-list {
+    gap: 8px;
+  }
 }
 
 /* ============================================================
@@ -908,169 +1249,11 @@ p.p-para.para-top {
   #searchBtn {
     padding: 10px 12px;
   }
-}
-
-/* ============================================================
-   FOOTER — redesigned
-   ============================================================ */
-#footer {
-  margin-top: auto;
-  width: 100%;
-  border-top: 1px solid var(--border-subtle);
-}
-
-.footWrapper {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 12px;
-  padding: 20px 0;
-}
-
-/* Left: brand slug */
-.foot-brand {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-family: var(--font-mono);
-  font-size: 0.78rem;
-  color: var(--text-muted);
-  white-space: nowrap;
-}
-
-.foot-brand-dot {
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background-color: var(--accent);
-  flex-shrink: 0;
-  box-shadow: 0 0 6px var(--accent);
-  animation: footPulse 2.4s ease-in-out infinite;
-}
-
-@keyframes footPulse {
-  0%,
-  100% {
-    opacity: 1;
-  }
-  50% {
-    opacity: 0.3;
-  }
-}
-
-.foot-brand-name {
-  color: var(--text-secondary);
-  font-weight: 700;
-  letter-spacing: 0.02em;
-}
-
-/* Center: copyright line */
-.foot-copy {
-  font-family: var(--font-mono);
-  font-size: 0.7rem;
-  color: var(--text-ghost);
-  letter-spacing: 0.04em;
-  text-align: center;
-  flex: 1;
-}
-
-/* Right: GitHub link */
-.foot-link {
-  display: flex;
-  align-items: center;
-  gap: 7px;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--text-muted);
-  border: 1px solid var(--border-default);
-  border-radius: var(--radius-sm);
-  padding: 6px 12px;
-  transition:
-    border-color 0.3s ease,
-    color 0.3s ease,
-    background-color 0.3s ease;
-  white-space: nowrap;
-  text-decoration: none;
-}
-
-.foot-link i {
-  font-size: 0.9rem;
-}
-
-.foot-link:hover {
-  border-color: var(--accent);
-  color: var(--accent);
-  background-color: var(--accent-bg);
-}
-
-@media (max-width: 640px) {
-  .footWrapper {
-    flex-direction: column;
-    align-items: center;
-    gap: 14px;
-    padding: 18px 0;
-    text-align: center;
-  }
-
-  .foot-copy {
-    order: 3;
-    font-size: 0.65rem;
-  }
-
-  .foot-brand {
-    order: 1;
-  }
-  .foot-link {
-    order: 2;
-    padding: 7px 14px;
-  }
-}
-
-@media (max-width: 400px) {
   .foot-copy {
     display: none;
   }
-}
 
-/* ============================================================
-   SKELETON LOADER
-   ============================================================ */
-@keyframes shimmer {
-  0% {
-    background-position: -600px 0;
+  .card-outer {
+    padding: 25px;
   }
-  100% {
-    background-position: 600px 0;
-  }
-}
-
-.skeleton-mode .skeleton-target {
-  background: linear-gradient(
-    90deg,
-    var(--bg-surface) 25%,
-    var(--border-default) 50%,
-    var(--bg-surface) 75%
-  );
-  background-size: 600px 100%;
-  animation: shimmer 1.4s infinite linear;
-  border-radius: var(--radius-sm);
-  color: transparent !important;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* individual skeleton sizes */
-.skeleton-mode #p-img {
-  opacity: 0;
-}
-.skeleton-mode .avatar-ring {
-  background: linear-gradient(
-    90deg,
-    var(--bg-surface) 25%,
-    var(--border-default) 50%,
-    var(--bg-surface) 75%
-  );
-  background-size: 600px 100%;
-  animation: shimmer 1.4s infinite linear;
 }
