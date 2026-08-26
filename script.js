@@ -147,7 +147,7 @@ function setLoading(isLoading) {
 // ── Contribution chart ────────────────────────────────────────
 function updateChart(data) {
   const chart = document.querySelector("#contribution");
-  const url = `https://github-readme-activity-graph.vercel.app/graph?username=${data[0].owner.login}&theme=github-${localStorage.getItem("theme")}`;
+  const url = `https://github-readme-activity-graph-navy-rho.vercel.app/graph?username=${data[0].owner.login}&theme=github-${localStorage.getItem("theme")}`;
   chart.src = url;
 }
 
